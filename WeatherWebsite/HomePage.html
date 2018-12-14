@@ -1,0 +1,98 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Penrod Weather</title>
+
+    <!-- Lightning Design CSS -->
+    <link href="styles/salesforce-lightning-design-system.css" rel="stylesheet"> 
+    <!-- Creating a page header -->
+    <div class="slds-page-header slds-m-left_small slds-m-right_small">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div>
+                        <div>
+                            <div>
+                                <h1>
+                                    <div class="slds-page-header__title slds-truncate">Penrod Weather</div><br />
+                                </h1>
+                            </div>
+                        </div>
+                        <p class="slds-page-header__name-meta">This website lets you see the current weather and temperature at all of the Penrod locations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+
+<!-- Making the background grayish-->
+<body class="slds-color__background_gray-6">
+        <div class="slds-m-left_small slds-m-right_small slds-text-color_default">
+            <!-- Displays the Cities with the Temperatures and Weather(Sunny, Cloudy, Rain, etc) -->
+            <div>
+                <div class="slds-card slds-panel__header_align-center slds-color__background_gray-2">
+                    <h2>Milwaukee</h2>
+                    <div>Temperature: <span data-bind="text: Miltemp"></span>&deg;F</div>
+                    Current Weather: <p data-bind="text: Milweather"></p>
+                </div>
+                <div class="slds-card slds-panel__header_align-center slds-color__background_gray-2">
+                    <h2>Minneapolis</h2>
+                    <div>Temperature: <span data-bind="text: Mintemp "></span>&deg;F</div>
+                    Current Weather: <p data-bind="text: Minweather"></p>
+                </div>
+                <div class="slds-card slds-panel__header_align-center slds-color__background_gray-2">
+                    <h2>Chicago</h2>
+                    <div>Temperature: <span data-bind="text: Daltemp"></span>&deg;F</div>
+                    Current Weather: <p data-bind="text: Dalweather"></p>
+                </div>
+                <div class="slds-card slds-panel__header_align-center slds-color__background_gray-2">
+                    <h2>Dallas</h2>
+                    <div>Temperature: <span data-bind="text: Chitemp"></span>&deg;F</div>
+                    Current Weather: <p data-bind="text: Chiweather"></p>
+                </div>
+            </div>
+
+            <script src="Scripts/jquery-3.3.1.js"></script>
+            <script src="Scripts/knockout-3.4.2.js"></script>
+            <!-- Setting the Values for both the temperature and weather in all four cities -->
+            <script>
+                var vm = {
+                    Miltemp: ko.observable(),
+                    Milweather: ko.observable(),
+                    Mintemp: ko.observable(),
+                    Minweather: ko.observable(),
+                    Daltemp: ko.observable(),
+                    Dalweather: ko.observable(),
+                    Chitemp: ko.observable(),
+                    Chiweather: ko.observable()
+                };
+
+                $.get('https://api.openweathermap.org/data/2.5/weather?zip=53202&units=imperial&appid=23ed3f89025318ceaab182673764ba7b', function (data) {
+                    vm.Miltemp(data.main.temp);
+                    vm.Milweather(data.weather[0].main);
+                });
+
+                $.get('https://api.openweathermap.org/data/2.5/weather?zip=55402&units=imperial&appid=23ed3f89025318ceaab182673764ba7b', function (data) {
+                    vm.Mintemp(data.main.temp);
+                    vm.Minweather(data.weather[0].main);
+                });
+
+                $.get('https://api.openweathermap.org/data/2.5/weather?zip=60605&units=imperial&appid=23ed3f89025318ceaab182673764ba7b', function (data) {
+                    vm.Chitemp(data.main.temp);
+                    vm.Chiweather(data.weather[0].main);
+                });
+
+                $.get('https://api.openweathermap.org/data/2.5/weather?zip=75219&units=imperial&appid=23ed3f89025318ceaab182673764ba7b', function (data) {
+                    vm.Daltemp(data.main.temp);
+                    vm.Dalweather(data.weather[0].main);
+                });
+
+                ko.applyBindings(vm);
+            </script>
+        </div>
+</body>
+</html>
